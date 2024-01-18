@@ -49,7 +49,7 @@
 		"compile": "npm run copy-src-and-lib && npm run compile-polyfill-modules && npm run polyfill-code-in-lib",
 		"copy-src-and-lib": "rm -rf ./lib ./src && cp -r ./node_modules/happy-dom/lib ./lib && cp -r ./node_modules/happy-dom/src ./src",
 		"compile-polyfill-modules": "tsc --project ./tsconfig.polyfills.json",
-		"polyfill-code-in-lib": "node ./bin/polyfill-code.cjs --dir=./lib",
+		"polyfill-code-in-lib": "node ./scripts/polyfill-code.cjs --dir=./lib",
         "test": "npm run test:types && npm run test:build",
 		"test:types": "tsc --noEmit --project ./tsconfig.typecheck.json",
 		"test:build": "esbuild ./test/esbuild-test.js --bundle --outdir=tmp --target=chrome100"
