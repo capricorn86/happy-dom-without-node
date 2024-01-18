@@ -14,16 +14,10 @@ main();
 const POLYFILL_MODULES = ['net', 'crypto', 'url', 'stream', 'vm', 'buffer', 'console'];
 
 const POLYFILLS = [
-	function polyfillProcess(_directory, file, content) {
-		if (!file.endsWith('.cjs') && !file.endsWith('.js')) {
-			return content;
-		}
+	function polyfillGlobals(_directory, _file, content) {
 		return content
 			.replace(/process\.platform/gm, `'Unknown'`)
-			.replace(/process\.arch/gm, `'Unknown'`);
-	},
-	function polyfillNodeJS(_directory, _file, content) {
-		return content
+			.replace(/process\.arch/gm, `'Unknown'`)
 			.replace(/NodeJS\.Timeout/gm, `number`)
 			.replace(/NodeJS\.Immediate/gm, `number`)
 			.replace(/globalThis\.setImmediate/gm, `globalThis.setTimeout`)
