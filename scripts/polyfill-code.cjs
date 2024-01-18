@@ -13,7 +13,7 @@ main();
 
 const POLYFILL_MODULES = ['net', 'crypto', 'url', 'stream', 'vm', 'buffer', 'console'];
 
-const POLYFILLS = [
+const POLYFILL_TRANSPILERS = [
 	function polyfillGlobals(_directory, _file, content) {
 		return content
 			.replace(/process\.platform/gm, `'Unknown'`)
@@ -49,12 +49,12 @@ const POLYFILLS = [
 		);
 	},
 	function polyfillModules(directory, file, content) {
-		const polyfillModuleDirectory = Path.join(directory, 'polyfill-modules');
+		const polyfillsDirectory = Path.join(directory, 'polyfills');
 		for (const module of POLYFILL_MODULES) {
 			const regexp = new RegExp(`import.+from\\s*(["']${module}["'])`);
 			moduleMatch = content.match(regexp);
 			if (moduleMatch) {
-				const modulePath = Path.relative(Path.dirname(file), polyfillModuleDirectory) + `/${module}.js`;
+				const modulePath = Path.relative(Path.dirname(file), polyfillsDirectory) + `/${module}.js`;
 				content = content.replace(
 					moduleMatch[0],
 					moduleMatch[0].replace(
@@ -95,7 +95,7 @@ async function readDirectory(directory) {
 					return readDirectory(filePath).then((files) => (allFiles = allFiles.concat(files)));
 				}
 				const extname = Path.extname(filePath);
-				if (extname === '.js' || extname === '.cjs' || extname === '.ts') {
+				if (extname === '.js' || extname === '.ts') {
 					allFiles.push(filePath);
 				}
 			})
@@ -115,8 +115,8 @@ async function polyfillFiles(directory, files) {
 			FS.promises.readFile(file).then((content) => {
 				const oldContent = content.toString();
 				let newContent = oldContent;
-				for (const polyfill of POLYFILLS) {
-					newContent = polyfill(directory, file, newContent);
+				for (const transpiler of POLYFILL_TRANSPILERS) {
+					newContent = transpiler(directory, file, newContent);
 				}
 				if (newContent === oldContent) {
 					return;
