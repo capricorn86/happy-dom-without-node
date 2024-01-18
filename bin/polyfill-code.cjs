@@ -55,12 +55,12 @@ const POLYFILLS = [
 		);
 	},
 	function polyfillModules(directory, file, content) {
-		const polyfillDirectory = Path.join(directory, 'polyfills');
+		const polyfillModuleDirectory = Path.join(directory, 'polyfill-modules');
 		for (const module of POLYFILL_MODULES) {
 			const regexp = new RegExp(`import.+from\\s*(["']${module}["'])`);
 			moduleMatch = content.match(regexp);
 			if (moduleMatch) {
-				const modulePath = Path.relative(Path.dirname(file), polyfillDirectory) + `/${module}.js`;
+				const modulePath = Path.relative(Path.dirname(file), polyfillModuleDirectory) + `/${module}.js`;
 				content = content.replace(
 					moduleMatch[0],
 					moduleMatch[0].replace(

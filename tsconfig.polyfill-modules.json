@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-		"rootDir": "polyfills",
-		"outDir": "lib/polyfills",
+		"rootDir": "polyfill-modules",
+		"outDir": "lib/polyfill-modules",
 		"target": "ES2020",
 		"declaration": true,
 		"declarationMap": true,
