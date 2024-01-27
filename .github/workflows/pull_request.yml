@@ -31,8 +31,10 @@ jobs:
       
       - name: Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: |
-          npm ci
+        run: npm ci --ignore-scripts
+      
+      - name: Prepare
+        run: npm run prepare
   
       - name: Build distrubution
         run: npm run build
