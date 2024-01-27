@@ -12,34 +12,6 @@ This package makes it possible to use Happy DOM in an environment without Node.j
 
 As VM is part of Node.js, this package does not support running JavaScript in a sandbox. Javascript will be executed in the global scope.
 
-### DOM Features
-
-- Custom Elements (Web Components)
-
-- Shadow Root (Shadow DOM)
-
-- Declarative Shadow DOM
-
-- Mutation Observer
-
-- Tree Walker
-
-- Fetch
-
-And much more..
-
-### Works With
-
-- [Google LitHTML](https://lit-html.polymer-project.org)
-
-- [Google LitElement](https://lit-element.polymer-project.org)
-
-- [React](https://reactjs.org)
-
-- [Angular](https://angular.io/)
-
-- [Vue](https://vuejs.org/)
-
 ### Module Systems
 
 - [ESM](https://nodejs.org/api/esm.html#introduction)
@@ -47,13 +19,13 @@ And much more..
 # Installation
 
 ```bash
-npm install happy-dom
+npm install happy-dom-without-node
 ```
 
 # Usage
 
 ```javascript
-import { Window } from 'happy-dom';
+import { Window } from 'happy-dom-without-node';
 
 const window = new Window({ url: 'https://localhost:8080' });
 const document = window.document;
@@ -69,38 +41,6 @@ container.appendChild(button);
 console.log(document.body.innerHTML);
 ```
 
-# Documentation
+# Contributing
 
-Read more about how to use Happy DOM in our [Wiki](https://github.com/capricorn86/happy-dom/wiki).
-
-# Performance
-
-| Operation                            | JSDOM   | Happy DOM |
-| ------------------------------------ | ------- | --------- |
-| Import / Require                     | 333 ms  | 45 ms     |
-| Parse HTML                           | 256 ms  | 26 ms     |
-| Serialize HTML                       | 65 ms   | 8 ms      |
-| Render custom element                | 214 ms  | 19 ms     |
-| querySelectorAll('tagname')          | 4.9 ms  | 0.7 ms    |
-| querySelectorAll('.class')           | 6.4 ms  | 3.7 ms    |
-| querySelectorAll('[attribute]')      | 4.0 ms  | 1.7 ms    |
-| querySelectorAll('[class~="name"]')  | 5.5 ms  | 2.9 ms    |
-| querySelectorAll(':nth-child(2n+1)') | 10.4 ms | 3.8 ms    |
-
-See how the test was done [here](https://github.com/capricorn86/happy-dom-performance-test)
-
-# Jest
-
-Happy DOM provide with a package called [@happy-dom/jest-environment](https://github.com/capricorn86/happy-dom/tree/master/packages/jest-environment) that makes it possible to use Happy DOM with [Jest](https://jestjs.io/).
-
-# Vitest
-
-[Vitest](https://github.com/vitest-dev/vitest) supports Happy DOM out of the box.
-
-# Global Registration
-
-Happy DOM provide with a package called [@happy-dom/global-registrator](https://github.com/capricorn86/happy-dom/tree/master/packages/global-registrator) that can register Happy DOM globally. It makes it possible to use Happy DOM for testing in a Node environment.
-
-# Sponsors
-
-[<img alt="RTVision" width="120px" src="https://avatars.githubusercontent.com/u/8292810?s=200&v=4" />](https://rtvision.com)
+See [Contributing Guide](https://github.com/capricorn86/happy-dom-without-node/blob/main/docs/contributing.md).

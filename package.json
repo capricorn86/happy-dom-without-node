@@ -1,35 +1,13 @@
 {
-	"name": "happy-dom-without-nodejs",
+	"name": "root",
 	"version": "0.0.0",
 	"license": "MIT",
+	"private": true,
 	"homepage": "https://github.com/capricorn86/happy-dom-without-node/",
 	"repository": "https://github.com/capricorn86/happy-dom-without-node/",
 	"author": "David Ortner",
 	"description": "Happy DOM is a JavaScript implementation of a web browser without its graphical user interface. It includes many web standards from WHATWG DOM and HTML.",
-	"main": "lib/index.js",
 	"type": "module",
-	"exports": {
-		".": {
-			"import": "./lib/index.js",
-			"default": "./lib/index.js"
-		},
-		"./lib/*.js": {
-			"import": "./lib/*.js",
-			"default": "./lib/*.js"
-		},
-		"./lib/*.ts": {
-			"import": "./lib/*.ts",
-			"default": "./lib/*.ts"
-		},
-		"./lib/*.map": {
-			"import": "./lib/*.map",
-			"default": "./lib/*.map"
-		},
-		"./src/*.ts": "./src/*.ts",
-		"./package.json": "./package.json",
-		"./.eslintrc.cjs": "./.eslintrc.cjs",
-		"./.prettierrc.cjs": "./.prettierrc.cjs"
-	},
 	"keywords": [
 		"jsdom",
 		"dom",
@@ -46,26 +24,39 @@
 		"access": "public"
 	},
 	"scripts": {
-		"compile": "npm run copy-src-and-lib && npm run compile-polyfill-modules && npm run polyfill-code-in-lib",
-		"copy-src-and-lib": "rm -rf ./lib ./src && cp -r ./node_modules/happy-dom/lib ./lib && cp -r ./node_modules/happy-dom/src ./src",
-		"compile-polyfill-modules": "tsc --project ./tsconfig.polyfills.json",
-		"polyfill-code-in-lib": "node ./scripts/polyfill-code.cjs --dir=./lib",
-        "test": "npm run test:types && npm run test:build",
+		"build": "npm run build:copy-files && npm run build:compile-polyfill-modules && npm run build:polyfill-code && npm run build:package-json && npm run build:install",
+		"build:copy-files": "rm -rf ./dist && mkdir dist && cp ./LICENSE ./dist/LICENSE && cp ./README.md ./dist/README.md && echo 'node_modules\npackage-lock.json\n.npmrc' > ./dist/.npmignore && cp -r ./node_modules/happy-dom/lib ./dist/lib && cp -r ./node_modules/happy-dom/src ./dist/src",
+		"build:compile-polyfill-modules": "tsc --project ./tsconfig.polyfills.json",
+		"build:polyfill-code": "node ./scripts/polyfill-code.cjs --dir=./dist/lib",
+		"build:package-json": "node ./scripts/build-package-json.cjs --dir=./dist",
+		"build:install": "cd ./dist && npm install",
+		"lint": "eslint --ignore-path .lintignore --max-warnings 0 .",
+		"lint:fix": "eslint --ignore-path .lintignore --max-warnings 0 --fix .",
+		"lint:changed": "happy-lint-changed-files",
+		"test": "npm run test:types && npm run test:e2e",
 		"test:types": "tsc --noEmit --project ./tsconfig.typecheck.json",
-		"test:build": "esbuild ./test/esbuild-test.js --bundle --outdir=tmp --target=chrome100"
-	},
-	"dependencies": {
-		"entities": "^4.5.0",
-		"webidl-conversions": "^7.0.0",
-		"whatwg-mimetype": "^3.0.0",
-		"whatwg-url": "^14.0.0"
+		"test:e2e": "node ./e2e/e2e.cjs",
+		"prepare": "playwright install chromium"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.16.0",
+		"@typescript-eslint/parser": "^5.16.0",
+		"eslint": "^8.11.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-filenames": "^1.3.2",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-jsdoc": "^38.0.6",
+		"eslint-plugin-json": "^3.1.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"happy-conventional-commit": "^0.0.7",
 		"@types/node": "^16.11.7",
+		"husky": "^9.0.6",
 		"prettier": "^2.6.0",
 		"typescript": "^5.0.4",
 		"esbuild": "^0.19.11",
-        "happy-dom": "x.x.x"
+		"whatwg-url": "^14.0.0",
+		"playwright": "^1.41.1",
+		"happy-dom": "^13.3.1"
 	},
 	"engines": {
 		"node": ">=16.0.0"

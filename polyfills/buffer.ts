@@ -1,6 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
+// @ts-ignore
+import Blob from '../file/Blob.js';
 
-import { Blob } from 'happy-dom-without-nodejs';
 /**
  *
  */

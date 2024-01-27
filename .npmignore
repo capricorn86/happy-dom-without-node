@@ -1,7 +1,0 @@
-node_modules
-tmp
-test
-scripts
-polyfills
-.turbo
-npm-shrinkwrap.json

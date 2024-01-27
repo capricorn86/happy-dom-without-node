@@ -1,5 +1,6 @@
-/* eslint-disable no-console*/
-/* eslint-disable @typescript-eslint/no-var-requires*/
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable consistent-return */
 
 const Path = require('path');
 const FS = require('fs');
@@ -52,7 +53,8 @@ const POLYFILL_TRANSPILERS = [
 		const polyfillsDirectory = Path.join(directory, 'polyfills');
 		for (const module of POLYFILL_MODULES) {
 			const regexp = new RegExp(`import.+from\\s*(["']${module}["'])`);
-			moduleMatch = content.match(regexp);
+			const moduleMatch = content.match(regexp);
+
 			if (moduleMatch) {
 				const modulePath = Path.relative(Path.dirname(file), polyfillsDirectory) + `/${module}.js`;
 				content = content.replace(

@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"rootDir": "lib",
+		"rootDir": "dist/lib",
 		"target": "ES2020",
 		"declaration": true,
 		"declarationMap": true,
@@ -27,6 +27,6 @@
 		"types": []
 	},
 	"include": [
-		"lib"
+		"dist/lib"
 	]
 }

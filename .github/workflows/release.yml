@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+  #At the end of every day
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  check-next-version:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    outputs:
+      next_version: ${{ steps.versionCheck.outputs.next_version }}
+      current_version: ${{ steps.versionCheck.outputs.current_version }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - id: versionCheck
+        run: |
+          echo "next_version=$(npm view happy-dom version)" >> $GITHUB_OUTPUT
+          echo "current_version=$(npm view happy-dom-without-node version || "0.0.0")" >> $GITHUB_OUTPUT
+
+  publish: 
+    runs-on: ubuntu-latest
+    needs: [check-next-version]
+    if: ${{ needs.check-next-version.outputs.next_version != needs.check-next-version.outputs.current_version }}
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('./package-lock.json') }}
+      
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+  
+      - name: Build distrubution
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Set .npmrc for publish
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ./dist/.npmrc
+
+      - name: Publish packages
+        run: |
+          cd ./dist
+          npm publish
