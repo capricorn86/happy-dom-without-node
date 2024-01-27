@@ -13,30 +13,8 @@ npm install
 ### Compile
 
 ```bash
-npm run compile
+npm run build
 ```
-
-### Watch
-
-```bash
-npm run watch
-```
-
-### Debugging
-
-1. Go to the package you wish to test in the terminal (e.g. "cd ./packages/happy-dom")
-2. Write "debugger;" at the place you want to place a breakpoint in the code.
-3. Run the following command in the terminal:
-
-```bash
-npm run test:debug
-```
-
-4. Open Chrome.
-5. Open developer tools.
-6. A green ball should appear to the left of the menu bar in developer tools.
-7. Click on the green ball.
-8. Click continue to jump to your breakpoint.
 
 ### Test
 
@@ -44,12 +22,6 @@ npm run test:debug
 
 ```bash
 npm test
-```
-
-##### Watch Tests
-
-```bash
-npm run test:watch
 ```
 
 ## Branch
