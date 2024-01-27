@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-node ./node-modules/.bin/happy-prepare-commit-message --commitFile=$1 --commitType=$2
+node ./node_modules/.bin/happy-prepare-commit-message --commitFile=$1 --commitType=$2

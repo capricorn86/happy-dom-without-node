@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-node ./node-modules/.bin/happy-lint-changed
+node ./node_modules/.bin/happy-lint-changed
