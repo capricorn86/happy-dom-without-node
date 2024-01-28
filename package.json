@@ -30,8 +30,8 @@
 		"build:polyfill-code": "node ./scripts/polyfill-code.cjs --dir=./dist/lib",
 		"build:package-json": "node ./scripts/build-package-json.cjs --dir=./dist",
 		"build:install": "cd ./dist && npm install",
-		"lint": "eslint --ignore-path .lintignore --max-warnings 0 .",
-		"lint:fix": "eslint --ignore-path .lintignore --max-warnings 0 --fix .",
+		"lint": "eslint --max-warnings 0 --cache --cache-location ./.turbo/eslint.cache .",
+		"lint:fix": "eslint --max-warnings 0 --cache --cache-location ./.turbo/eslint.cache --fix .",
 		"lint:changed": "happy-lint-changed-files",
 		"test": "npm run test:types && npm run test:e2e",
 		"test:types": "tsc --noEmit --project ./tsconfig.typecheck.json",
@@ -48,7 +48,7 @@
 		"eslint-plugin-jsdoc": "^38.0.6",
 		"eslint-plugin-json": "^3.1.0",
 		"eslint-plugin-prettier": "^4.0.0",
-		"happy-conventional-commit": "^0.0.9",
+		"happy-conventional-commit": "^0.0.10",
 		"@types/node": "^16.11.7",
 		"husky": "^9.0.6",
 		"prettier": "^2.6.0",
@@ -57,6 +57,14 @@
 		"whatwg-url": "^14.0.0",
 		"playwright": "^1.41.1",
 		"happy-dom": "^13.3.1"
+	},
+	"happyLintChanged": {
+		"rules": [
+			{
+				"command": "eslint --max-warnings 0 --cache --cache-location ./.turbo/eslint.cache --fix",
+				"regexp": "^[a-zA-Z0-9_].*\\.(cjs|mjs|js|jsx|ts|tsx|json)$"
+			}
+		]
 	},
 	"engines": {
 		"node": ">=16.0.0"
