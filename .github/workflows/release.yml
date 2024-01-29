@@ -65,6 +65,15 @@ jobs:
       - name: Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
+
+      - name: Install Happy DOM
+        run: npm install happy-dom@${{ needs.check-next-version.outputs.next_version }}
+      
+      - name: Push changes
+        run: |
+          git add .
+          git commit -m "Release ${{ needs.check-next-version.outputs.next_version }}"
+          git push
       
       - name: Prepare
         run: npm run prepare
