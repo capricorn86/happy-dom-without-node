@@ -12,7 +12,16 @@ process.on('unhandledRejection', (reason) => {
 
 main();
 
-const POLYFILL_MODULES = ['net', 'crypto', 'url', 'stream', 'vm', 'buffer', 'console'];
+const POLYFILL_MODULES = [
+	'net',
+	'crypto',
+	'url',
+	'stream',
+	'stream/web',
+	'vm',
+	'buffer',
+	'console'
+];
 
 const POLYFILL_TRANSPILERS = [
 	function polyfillGlobals(_directory, _file, content) {
@@ -49,24 +58,35 @@ const POLYFILL_TRANSPILERS = [
 			''
 		);
 	},
+	function polyfillIncorrectHTMLElementTagNameMapExtend(_directory, file, content) {
+		if (!file.includes('HTMLElementTagNameMap')) {
+			return content;
+		}
+
+		return content.replace(' extends HTMLElementTagNameMap', '');
+	},
 	function polyfillModules(directory, file, content) {
 		const polyfillsDirectory = Path.join(directory, 'polyfills');
+		let newContent = content;
 		for (const module of POLYFILL_MODULES) {
-			const regexp = new RegExp(`import.+from\\s*(["']${module}["'])`);
-			const moduleMatch = content.match(regexp);
+			const regexp = new RegExp(
+				`import.+from\\s*(["']${module}["'])|import\\((["']${module}["'])\\)`,
+				'gm'
+			);
+			let match;
 
-			if (moduleMatch) {
+			while ((match = regexp.exec(content)) !== null) {
 				const modulePath = Path.relative(Path.dirname(file), polyfillsDirectory) + `/${module}.js`;
-				content = content.replace(
-					moduleMatch[0],
-					moduleMatch[0].replace(
-						moduleMatch[1],
+				newContent = newContent.replace(
+					match[0],
+					match[0].replace(
+						match[1] || match[2],
 						`'${modulePath.startsWith('.') ? modulePath : `./${modulePath}`}'`
 					)
 				);
 			}
 		}
-		return content;
+		return newContent;
 	}
 ];
 
