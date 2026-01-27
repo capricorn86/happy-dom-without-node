@@ -6,7 +6,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [24]
 
     steps:
       - uses: actions/checkout@v3
@@ -28,14 +28,14 @@ jobs:
           path: |
             ./node_modules
           key: ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('./package-lock.json') }}
-      
+
       - name: Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
-      
+
       - name: Prepare
         run: npm run prepare
-  
+
       - name: Build distrubution
         run: npm run build
 
