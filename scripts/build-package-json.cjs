@@ -26,19 +26,6 @@ function getArguments() {
 	return args;
 }
 
-function removeCJSExport(entry) {
-	for (const key of Object.keys(entry)) {
-		if (key.includes('cjs')) {
-			delete entry[key];
-		}
-		if (typeof entry[key] === 'string' && entry[key].includes('cjs')) {
-			delete entry[key];
-		} else if (typeof entry[key] === 'object') {
-			removeCJSExport(entry[key]);
-		}
-	}
-}
-
 async function main() {
 	const args = getArguments();
 
@@ -51,8 +38,6 @@ async function main() {
 
 	delete packageJson.scripts;
 	delete packageJson.devDependencies;
-
-	removeCJSExport(packageJson.exports);
 
 	packageJson.name = 'happy-dom-without-node';
 	packageJson.homepage = 'https://github.com/capricorn86/happy-dom-without-node/';
