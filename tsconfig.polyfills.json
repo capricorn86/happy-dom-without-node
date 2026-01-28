@@ -2,11 +2,11 @@
 	"compilerOptions": {
 		"rootDir": "polyfills",
 		"outDir": "dist/lib/polyfills",
-		"target": "ES2020",
+		"target": "ESNext",
 		"declaration": true,
 		"declarationMap": true,
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"allowSyntheticDefaultImports": true,
@@ -16,18 +16,13 @@
 		"removeComments": false,
 		"preserveConstEnums": true,
 		"sourceMap": true,
-		"skipLibCheck": true,
+		"skipLibCheck": false,
 		"baseUrl": ".",
 		"composite": false,
 		"incremental": false,
-        "allowJs": true,
-        "lib": [
-            "es2020",
-            "dom"
-        ],
+		"allowJs": true,
+		"lib": ["ESNext", "DOM"],
 		"types": []
 	},
-	"include": [
-		"polyfills"
-	]
+	"include": ["polyfills"]
 }

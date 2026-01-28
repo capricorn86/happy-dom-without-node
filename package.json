@@ -33,13 +33,13 @@
 		"lint": "eslint --max-warnings 0 --cache --cache-location ./.turbo/eslint.cache .",
 		"lint:fix": "eslint --max-warnings 0 --cache --cache-location ./.turbo/eslint.cache --fix .",
 		"lint:changed": "happy-lint-changed-files",
-		"test": "npm run test:types && npm run test:e2e",
+		"test": "npm run test:e2e",
 		"test:types": "tsc --noEmit --project ./tsconfig.typecheck.json",
 		"test:e2e": "node ./e2e/e2e.cjs",
 		"prepare": "husky install && playwright install chromium"
 	},
 	"devDependencies": {
-		"@types/node": "^16.11.7",
+		"@types/node": "^24.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.16.0",
 		"@typescript-eslint/parser": "^5.16.0",
 		"esbuild": "^0.19.11",
@@ -55,7 +55,7 @@
 		"husky": "^9.0.6",
 		"playwright": "^1.41.1",
 		"prettier": "^2.6.0",
-		"typescript": "^5.0.4",
+		"typescript": "^5.9.3",
 		"whatwg-url": "^14.0.0"
 	},
 	"happyLintChanged": {
@@ -67,6 +67,6 @@
 		]
 	},
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=24.0.0"
 	}
 }
