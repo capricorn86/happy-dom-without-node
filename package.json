@@ -51,7 +51,7 @@
 		"eslint-plugin-json": "^3.1.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"happy-conventional-commit": "^0.0.10",
-		"happy-dom": "^14.12.3",
+		"happy-dom": "^20.4.0",
 		"husky": "^9.0.6",
 		"playwright": "^1.41.1",
 		"prettier": "^2.6.0",
